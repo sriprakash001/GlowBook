@@ -1,0 +1,691 @@
+/* =========================================================
+   GLOWBOOK - CUSTOMER SALON UI
+   UI ONLY - NO BUSINESS LOGIC
+========================================================= */
+
+.salon-page {
+    min-height: 100vh;
+    padding: 42px 20px 80px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(124, 58, 237, 0.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at top right,
+            rgba(236, 72, 153, 0.08),
+            transparent 35%
+        ),
+        #faf9fc;
+}
+
+
+/* =========================================================
+   SALON HERO
+========================================================= */
+
+.salon-hero {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.salon-hero-image {
+    height: 430px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px 28px 0 0;
+    background: #eeeaf5;
+}
+
+.salon-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.salon-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(17, 12, 35, 0.82),
+            rgba(17, 12, 35, 0.15) 65%,
+            rgba(17, 12, 35, 0.05)
+        );
+}
+
+.salon-hero-placeholder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #8c819d;
+}
+
+.salon-hero-placeholder span {
+    font-size: 48px;
+}
+
+.salon-hero-placeholder p {
+    margin-top: 8px;
+}
+
+.salon-hero-content {
+    position: absolute;
+    left: 42px;
+    bottom: 38px;
+    color: white;
+    z-index: 2;
+}
+
+.salon-tag {
+    display: inline-flex;
+    padding: 7px 13px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(10px);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+}
+
+.salon-hero-content h1 {
+    margin: 0;
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.salon-hero-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    font-size: 16px;
+    opacity: 0.95;
+}
+
+
+/* =========================================================
+   SALON INFO
+========================================================= */
+
+.salon-info {
+    background: white;
+    padding: 32px 38px 36px;
+    border-radius: 0 0 28px 28px;
+    box-shadow: 0 15px 45px rgba(40, 25, 70, 0.08);
+}
+
+.salon-introduction {
+    max-width: 800px;
+}
+
+.section-label {
+    display: block;
+    color: #7c3aed;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.salon-introduction p {
+    margin: 0;
+    color: #625a6d;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CONTACT INFORMATION
+========================================================= */
+
+.salon-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 30px;
+    padding-top: 28px;
+    border-top: 1px solid #eeeaf2;
+}
+
+.salon-contact-item {
+    display: flex;
+    gap: 12px;
+    min-width: 0;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3edff;
+    color: #7c3aed;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.salon-contact-item div:last-child {
+    min-width: 0;
+}
+
+.salon-contact-item span {
+    display: block;
+    color: #91889b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 4px;
+}
+
+.salon-contact-item strong {
+    display: block;
+    color: #272033;
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   SERVICES SECTION
+========================================================= */
+
+.services-section {
+    max-width: 1120px;
+    margin: 55px auto 0;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    color: #211a31;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.section-heading p {
+    margin: 7px 0 0;
+    color: #776d82;
+    font-size: 14px;
+}
+
+.service-count {
+    min-width: 90px;
+    padding: 12px 18px;
+    border-radius: 16px;
+    text-align: center;
+    background: white;
+    border: 1px solid #eee8f5;
+    box-shadow: 0 8px 25px rgba(50, 30, 80, 0.05);
+}
+
+.service-count strong {
+    display: block;
+    color: #7c3aed;
+    font-size: 22px;
+}
+
+.service-count span {
+    color: #81778c;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SERVICE GRID
+========================================================= */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+.service-card {
+    overflow: hidden;
+    background: white;
+    border: 1px solid #eee9f4;
+    border-radius: 22px;
+    box-shadow: 0 8px 28px rgba(40, 25, 70, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(40, 25, 70, 0.12);
+    border-color: #dfd0fa;
+}
+
+.service-card-image {
+    height: 205px;
+    position: relative;
+    overflow: hidden;
+    background: #f1edf5;
+}
+
+.service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-card-image img {
+    transform: scale(1.04);
+}
+
+.service-no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        linear-gradient(
+            135deg,
+            #f6f1ff,
+            #fdf1f7
+        );
+}
+
+.service-no-image span {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: white;
+    color: #7c3aed;
+    font-size: 28px;
+    box-shadow: 0 8px 25px rgba(80, 40, 120, 0.1);
+}
+
+.service-duration {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 7px 11px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #433653;
+    font-size: 11px;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.service-card-body {
+    padding: 22px;
+}
+
+.service-card-body h3 {
+    margin: 0 0 8px;
+    color: #272033;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.service-description {
+    height: 43px;
+    overflow: hidden;
+    margin: 0 0 20px;
+    color: #81778c;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.service-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 17px;
+    border-top: 1px solid #f0ecf4;
+}
+
+.service-price small {
+    display: block;
+    color: #9a91a4;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.service-price strong {
+    color: #272033;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.service-book-btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 11px;
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #d62983
+    );
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(124, 58, 237, 0.22);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-book-btn span {
+    margin-left: 6px;
+}
+
+.service-book-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 23px rgba(124, 58, 237, 0.3);
+}
+
+
+/* =========================================================
+   SALON LIST CARD
+========================================================= */
+
+.salon-card {
+    height: 100%;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #eee9f4;
+    border-radius: 22px;
+    box-shadow: 0 8px 28px rgba(40, 25, 70, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.salon-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(40, 25, 70, 0.12);
+}
+
+.salon-card-image {
+    height: 230px;
+    position: relative;
+    overflow: hidden;
+    background: #f2eef6;
+}
+
+.salon-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.salon-card:hover .salon-card-image img {
+    transform: scale(1.04);
+}
+
+.salon-image-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 7px 11px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #55338a;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.salon-no-image {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #978ca3;
+}
+
+.salon-no-image span {
+    font-size: 34px;
+    color: #7c3aed;
+}
+
+.salon-no-image p {
+    margin: 4px 0 0;
+    font-size: 12px;
+}
+
+.salon-card-body {
+    padding: 23px;
+}
+
+.salon-card-body h3 {
+    margin: 0 0 8px;
+    color: #272033;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.salon-description {
+    height: 43px;
+    overflow: hidden;
+    margin: 0 0 17px;
+    color: #81778c;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.salon-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 20px;
+    color: #5e5368;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.location-icon {
+    color: #7c3aed;
+    font-size: 18px;
+}
+
+.salon-view-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #d62983
+    );
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 7px 18px rgba(124, 58, 237, 0.2);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.salon-view-btn:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(124, 58, 237, 0.3);
+}
+
+
+/* =========================================================
+   EMPTY / ERROR
+========================================================= */
+
+.empty-services {
+    padding: 65px 20px;
+    text-align: center;
+    background: white;
+    border: 1px dashed #ddd3e8;
+    border-radius: 22px;
+}
+
+.empty-services > div {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f4effc;
+    color: #7c3aed;
+    font-size: 25px;
+}
+
+.empty-services h3 {
+    margin: 0 0 6px;
+    color: #30263b;
+    font-size: 18px;
+}
+
+.empty-services p {
+    margin: 0;
+    color: #8b8194;
+    font-size: 13px;
+}
+
+.salon-error,
+.salon-warning {
+    max-width: 1120px;
+    margin: 30px auto;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: white;
+    border: 1px solid #eee8f3;
+    color: #5d5268;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .salon-contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .salon-page {
+        padding: 20px 12px 60px;
+    }
+
+    .salon-hero-image {
+        height: 340px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .salon-hero-content {
+        left: 24px;
+        bottom: 25px;
+        right: 20px;
+    }
+
+    .salon-hero-content h1 {
+        font-size: 34px;
+    }
+
+    .salon-info {
+        padding: 25px 20px;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .salon-contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .services-section {
+        margin-top: 38px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .service-count {
+        align-self: flex-start;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .service-card-body {
+        padding: 18px;
+    }
+
+    .service-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .service-book-btn {
+        width: 100%;
+    }
+
+}
