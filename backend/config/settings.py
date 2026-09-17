@@ -110,15 +110,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": config("MYSQLDATABASE", default=config("DB_NAME", default="defaultdb")),
-        "USER": config("MYSQLUSER", default=config("DB_USER", default="root")),
-        "PASSWORD": config("MYSQLPASSWORD", default=config("DB_PASSWORD", default="")),
-        "HOST": config("MYSQLHOST", default=config("DB_HOST", default="localhost")),
-        "PORT": config("MYSQLPORT", default=config("DB_PORT", default="3306")),
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT", default="3306"),
+        "OPTIONS": {
+            "ssl": {
+                "ca": config("DB_SSL_CA"),
+            }
+        },
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators

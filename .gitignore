@@ -39,3 +39,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# aiven certificate
+aiven-ca.pem
