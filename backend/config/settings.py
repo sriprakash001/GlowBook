@@ -97,18 +97,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": config("MYSQLDATABASE", default=config("DB_NAME")),
-#         "USER": config("MYSQLUSER", default=config("DB_USER")),
-#         "PASSWORD": config("MYSQLPASSWORD", default=config("DB_PASSWORD")),
-#         "HOST": config("MYSQLHOST", default=config("DB_HOST")),
-#         "PORT": config("MYSQLPORT", default=config("DB_PORT", default="3306")),
-#     }
-# }
-
-
 
 DB_SSL_CA = config("DB_SSL_CA", default="")
 
@@ -187,6 +175,7 @@ STORAGES = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://glow-book-1b1a4xtq4-glowbook1.vercel.app",
 ]
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
