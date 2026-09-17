@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,8 +32,8 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    ]
-
+    "glowbook-backend.onrender.com",
+]
 
 # Application definition
 
@@ -107,6 +108,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #     }
 # }
 
+
+
+DB_SSL_CA = config("DB_SSL_CA", default="")
+
+if DB_SSL_CA and not os.path.exists(DB_SSL_CA):
+    with open("/tmp/aiven-ca.pem", "w") as f:
+        f.write(DB_SSL_CA)
+    DB_SSL_CA = "/tmp/aiven-ca.pem"
+
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -117,7 +128,7 @@ DATABASES = {
         "PORT": config("DB_PORT", default="3306"),
         "OPTIONS": {
             "ssl": {
-                "ca": config("DB_SSL_CA"),
+                "ca": DB_SSL_CA,
             }
         },
     }
