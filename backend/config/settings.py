@@ -176,6 +176,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://glow-book-1b1a4xtq4-glowbook1.vercel.app",
+    "https://glow-book-orcin.vercel.app"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://glow-book-orcin.vercel.app",
 ]
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
