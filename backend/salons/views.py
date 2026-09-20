@@ -1,87 +1,8 @@
-# from rest_framework import viewsets
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework.decorators import action
-# from rest_framework.response import Response
-# from rest_framework import status
-
-# from .models import Salon, SalonCategory
-# from .serializers import SalonSerializer, SalonCategorySerializer
-
-
-# class SalonViewSet(viewsets.ModelViewSet):
-
-#     queryset = Salon.objects.filter(
-#         is_active=True
-#     )
-
-#     serializer_class = SalonSerializer
-
-#     permission_classes = [
-#         IsAuthenticated
-#     ]
-
-#     search_fields = [
-#         "name",
-#         "city",
-#         "description",
-#     ]
-
-#     ordering_fields = [
-#         "name",
-#         "created_at",
-#     ]
-
-#     def perform_create(self, serializer):
-
-#         serializer.save(
-#             owner=self.request.user
-#         )
-
-#     @action(
-#         detail=False,
-#         methods=["get"],
-#         url_path="my-salon"
-#     )
-#     def my_salon(self, request):
-
-#         salon = Salon.objects.filter(
-#             owner=request.user,
-#             is_active=True
-#         ).first()
-
-#         if not salon:
-
-#             return Response(
-#                 {
-#                     "message": "You have not created a salon yet."
-#                 },
-#                 status=status.HTTP_404_NOT_FOUND
-#             )
-
-#         serializer = self.get_serializer(salon)
-
-#         return Response(
-#             serializer.data
-#         )
-
-
-# class SalonCategoryViewSet(viewsets.ModelViewSet):
-
-#     queryset = SalonCategory.objects.filter(
-#         is_active=True
-#     )
-
-#     serializer_class = SalonCategorySerializer
-
-#     permission_classes = [
-#         IsAuthenticated
-#     ]
-
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.exceptions import PermissionDenied
 
 from .models import Salon, SalonCategory
 from .serializers import SalonSerializer, SalonCategorySerializer
@@ -89,9 +10,9 @@ from .serializers import SalonSerializer, SalonCategorySerializer
 
 class SalonViewSet(viewsets.ModelViewSet):
 
-    queryset = Salon.objects.filter(
-        is_active=True
-    )
+    # Allow DRF to find all salons by ID.
+    # Owner permission is checked separately below.
+    queryset = Salon.objects.all()
 
     serializer_class = SalonSerializer
 
@@ -110,12 +31,19 @@ class SalonViewSet(viewsets.ModelViewSet):
         "created_at",
     ]
 
+    # ---------------------------------
+    # Create salon
+    # ---------------------------------
+
     def perform_create(self, serializer):
 
-        serializer.save(owner=self.request.user,is_active=True)
+        serializer.save(
+            owner=self.request.user,
+            is_active=True
+        )
 
     # ---------------------------------
-    # Get all salons owned by current user
+    # Get salons owned by current user
     # ---------------------------------
 
     @action(
@@ -126,8 +54,7 @@ class SalonViewSet(viewsets.ModelViewSet):
     def my_salons(self, request):
 
         salons = Salon.objects.filter(
-            owner=request.user,
-            is_active=True
+            owner=request.user
         ).order_by("-created_at")
 
         serializer = self.get_serializer(
@@ -150,13 +77,14 @@ class SalonViewSet(viewsets.ModelViewSet):
         # Only the owner can update the salon
         if salon.owner != self.request.user:
 
-            from rest_framework.exceptions import PermissionDenied
-
             raise PermissionDenied(
                 "You can only update your own salon."
             )
 
-        serializer.save()
+        # Keep the salon active after updating
+        serializer.save(
+            is_active=True
+        )
 
 
 class SalonCategoryViewSet(viewsets.ModelViewSet):
