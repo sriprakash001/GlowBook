@@ -67,6 +67,9 @@ function MySalon() {
 
     const [loading, setLoading] = useState(true);
 
+    // Shows a full-screen loading message while a salon is being saved
+    const [salonSaving, setSalonSaving] = useState(false);
+
     const [showSalonForm, setShowSalonForm] = useState(false);
 
     const [editingSalon, setEditingSalon] = useState(null);
@@ -386,6 +389,12 @@ function MySalon() {
 
         event.preventDefault();
 
+        // Prevent duplicate submissions and show the loading screen
+        if (salonSaving) {
+            return;
+        }
+
+        setSalonSaving(true);
         setMessage("");
 
 
@@ -551,6 +560,11 @@ function MySalon() {
                 );
 
             }
+
+        } finally {
+
+            // Hide the loading screen after success or error
+            setSalonSaving(false);
 
         }
 
@@ -1141,7 +1155,15 @@ function MySalon() {
                                     <div className="eyebrow">SALON DETAILS</div>
                                     <h2>{editingSalon ? "Edit Salon" : "Add New Salon"}</h2>
                                 </div>
-                                <button className="icon-btn" onClick={handleCancelSalon} aria-label="Close">×</button>
+
+                                <button
+                                    className="icon-btn"
+                                    onClick={handleCancelSalon}
+                                    aria-label="Close"
+                                    disabled={salonSaving}
+                                >
+                                    ×
+                                </button>
                             </div>
 
                             <form onSubmit={handleSalonSubmit}>
@@ -1155,14 +1177,19 @@ function MySalon() {
                                         ["state", "State", "text", false],
                                         ["pincode", "Pincode", "text", false],
                                     ].map(([name, label, type, required]) => (
-                                        <div className={name === "address" ? "field full" : "field"} key={name}>
+                                        <div
+                                            className={name === "address" ? "field full" : "field"}
+                                            key={name}
+                                        >
                                             <label>{label}</label>
+
                                             <input
                                                 type={type}
                                                 name={name}
                                                 value={salonForm[name]}
                                                 onChange={handleSalonChange}
                                                 required={required}
+                                                disabled={salonSaving}
                                                 placeholder={`Enter ${label.toLowerCase()}`}
                                             />
                                         </div>
@@ -1170,34 +1197,86 @@ function MySalon() {
 
                                     <div className="field full">
                                         <label>Description</label>
+
                                         <textarea
                                             name="description"
                                             rows="3"
                                             value={salonForm.description}
                                             onChange={handleSalonChange}
+                                            disabled={salonSaving}
                                             placeholder="Tell customers what makes your salon special..."
                                         />
                                     </div>
 
                                     <div className="field full">
                                         <label>Salon Image</label>
+
                                         <input
                                             type="file"
                                             name="image"
                                             accept="image/*"
-                                            onChange={(event) => setSalonForm((previous) => ({ ...previous, image: event.target.files?.[0] || null }))}
+                                            disabled={salonSaving}
+                                            onChange={(event) =>
+                                                setSalonForm((previous) => ({
+                                                    ...previous,
+                                                    image: event.target.files?.[0] || null
+                                                }))
+                                            }
                                         />
                                     </div>
                                 </div>
 
                                 <div className="modal-actions">
-                                    <button type="button" className="secondary-btn" onClick={handleCancelSalon}>Cancel</button>
-                                    <button type="submit" className="primary-btn">
-                                        {editingSalon ? "Save Changes" : "Create Salon"}
+                                    <button
+                                        type="button"
+                                        className="secondary-btn"
+                                        onClick={handleCancelSalon}
+                                        disabled={salonSaving}
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        className="primary-btn"
+                                        disabled={salonSaving}
+                                    >
+                                        {salonSaving ? (
+                                            <>
+                                                <span className="button-spinner" />
+                                                {editingSalon
+                                                    ? "Updating..."
+                                                    : "Creating..."}
+                                            </>
+                                        ) : (
+                                            editingSalon
+                                                ? "Save Changes"
+                                                : "Create Salon"
+                                        )}
                                     </button>
                                 </div>
                             </form>
                         </div>
+
+                        {/* Full-screen loading overlay while the API request is running */}
+                        {salonSaving && (
+                            <div className="salon-save-overlay">
+                                <div className="salon-save-loader">
+                                    <div className="save-spinner" />
+                                    <h3>
+                                        {editingSalon
+                                            ? "Updating your salon..."
+                                            : "Creating your salon..."}
+                                    </h3>
+                                    <p>
+                                        Please wait. We are saving your changes.
+                                    </p>
+                                    <span>
+                                        This may take a few seconds.
+                                    </span>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -1472,6 +1551,86 @@ const salonStyles = `
     .salon-loading h3 { margin:15px 0 5px; color:#29213e; }
     .salon-loading p { margin:0; font-size:13px; }
     .loading-spinner { width:38px; height:38px; border:4px solid #e8def2; border-top-color:#8338bd; border-radius:50%; animation:spin .8s linear infinite; }
+
+    /* Salon save button loading spinner */
+    .button-spinner {
+        width:14px;
+        height:14px;
+        border:2px solid rgba(255,255,255,.45);
+        border-top-color:#fff;
+        border-radius:50%;
+        display:inline-block;
+        margin-right:8px;
+        vertical-align:-2px;
+        animation:spin .8s linear infinite;
+    }
+
+    /* Full-screen loading message while salon is being saved */
+    .salon-save-overlay {
+        position:fixed;
+        inset:0;
+        z-index:2000;
+        background:rgba(24,18,35,.62);
+        backdrop-filter:blur(6px);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:24px;
+    }
+
+    .salon-save-loader {
+        width:min(390px,100%);
+        background:#fff;
+        border-radius:22px;
+        padding:32px 26px;
+        text-align:center;
+        box-shadow:0 25px 80px rgba(20,14,35,.3);
+    }
+
+    .salon-save-loader .save-spinner {
+        width:48px;
+        height:48px;
+        margin:0 auto 18px;
+        border:5px solid #eadff3;
+        border-top-color:#8338bd;
+        border-radius:50%;
+        animation:spin .8s linear infinite;
+    }
+
+    .salon-save-loader h3 {
+        margin:0 0 8px;
+        color:#29213e;
+        font-size:20px;
+    }
+
+    .salon-save-loader p {
+        margin:0;
+        color:#71687d;
+        font-size:13px;
+        line-height:1.5;
+    }
+
+    .salon-save-loader span {
+        display:block;
+        margin-top:8px;
+        color:#a098aa;
+        font-size:11px;
+    }
+
+    .modal-actions .primary-btn {
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .icon-btn:disabled,
+    .secondary-btn:disabled,
+    .field input:disabled,
+    .field textarea:disabled {
+        opacity:.6;
+        cursor:not-allowed;
+    }
+
     @keyframes spin { to { transform:rotate(360deg); } }
     @media (max-width:1050px) { .salon-hero { grid-template-columns:1fr; } .staff-grid,.services-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width:700px) { .salon-page { padding:24px 12px 50px; } .page-header { align-items:stretch; flex-direction:column; } .page-header h1 { font-size:31px; } .primary-btn { width:100%; } .salon-toolbar { align-items:stretch; flex-direction:column; } .stats-row { justify-content:space-between; gap:10px; } .management-section { padding:22px 16px; } .section-heading { align-items:flex-start; flex-direction:column; } .outline-btn { width:100%; } .staff-grid,.services-grid,.form-grid { grid-template-columns:1fr; } .field.full { grid-column:auto; } .salon-cover,.salon-cover img,.cover-placeholder { min-height:240px; } .salon-hero { padding:12px; } .salon-hero-content h2 { font-size:26px; } .modal-card { padding:20px; border-radius:18px; } }
